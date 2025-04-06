@@ -1,0 +1,114 @@
+<% layout("/layouts/boilerplate") %>
+
+  <style>
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 1rem solid black;
+
+
+    }
+
+    .filter {
+
+      padding: 1rem;
+      text-align: center;
+      opacity: 0.7;
+
+    }
+
+    .filter :hover {
+      opacity: 1;
+      cursor: pointer;
+      color: blue;
+
+    }
+  </style>
+
+  <body>
+    <div class="filters mt-2">
+
+      <div class="filter"><i class="fa-solid fa-fire"></i>
+        <p>Trending</p>
+      </div>
+
+      <div class="filter"><i class="fa-regular fa-heart"></i>
+        <p>Favourite</p>
+      </div>
+
+      <div class="filter"><i class="fa-solid fa-house"></i>
+        <p> Rooms</p>
+      </div>
+
+      <div class="filter"><i class="fa-solid fa-mountain-city"></i>
+        <p> Iconic Cities</p>
+      </div>
+
+      <div class="filter"><i class="fa-solid fa-mountain-sun"></i>
+        <p>Mountains</p>
+      </div>
+
+      <div class="filter"><i class="fa-brands fa-fort-awesome"></i></i>
+        <p> Castles</p>
+      </div>
+
+      <div class="filter"><i class="fa-solid fa-person-swimming"></i>
+        <p>  Pools</p>
+      </div>
+
+      <div class="filter"><i class="fa-solid fa-snowflake"></i>
+        <p>Arctic</p>
+      </div>
+
+      <div class="filter"><i class="fa-solid fa-campground"></i>
+        <p>Camping</p>
+      </div>
+
+      <div class="filter"><i class="fa-solid fa-tractor"></i></i></i>
+        <p>Farms</p>
+      </div>
+
+      <div class="filter"><i class="fa-solid fa-person-swimming"></i>
+        <p> Amazing Pools</p>
+      </div>
+
+      <div class="filter"><i class="fa-solid fa-volleyball"></i>
+        <p>play</p>
+      </div>
+
+      <div class="filter"><i class="fa-solid fa-igloo"></i>
+        <p> Domes</p>
+      </div>
+
+
+
+
+
+    </div>
+
+    <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-1">
+      <% for (let listing of allListings) { %>
+        <div class="col mt-3 mb-3">
+          <a href="/listings/<%- listing._id %>" class="listing-link">
+            <div class="card ">
+              <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem" />
+              <div class="card-img-overlay">
+
+              </div>
+              <div class="card-body">
+                <p class="mt-2 card-text"><b>
+                    <%= listing.title %>
+                  </b></p>
+
+                <p>
+                  <%= listing.price.toLocaleString("en-IN") %>/night
+                </p>
+
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <% } %>
+    </div>
+  </body>
