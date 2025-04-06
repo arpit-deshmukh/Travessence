@@ -91,7 +91,7 @@ const sessionOptions = {
 //root 
 app.get('/',(req,res)=>{
     // res.send("heyy , this is HOMEPAGE");
-    res.redirect("http://localhost:8080/listings");
+    res.redirect("/listings");
 });
 
 
