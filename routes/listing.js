@@ -56,6 +56,13 @@ router.get(
   wrapAsync(listingController.editListing)
 );
 
+router.get(
+  "/:id/analytics",
+  isLoggedIn,
+  isOwner,
+  wrapAsync(listingController.analyticsPage)
+);
+
 
 
 module.exports = router;

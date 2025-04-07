@@ -1,10 +1,20 @@
 const Listing = require("../models/listing.js");
+const Booking = require("../models/booking");
 
 
 module.exports.index = async (req, res) => {
-    const allListings = await Listing.find({});
-    res.render("listings/index.ejs", { allListings });
-}
+  const { q } = req.query;
+
+  let listings;
+  if (q) {
+    const regex = new RegExp(q, "i"); // 'i' = case insensitive
+    listings = await Listing.find({ title: regex }); // you can also search in 'location' or 'description'
+  } else {
+    listings = await Listing.find({});
+  }
+
+  res.render("listings/index", { allListings: listings, q });
+};
 
 module.exports.renderNewForm  = (req, res) => {
     res.render("listings/new.ejs");
@@ -25,7 +35,7 @@ module.exports.showListing= async (req, res) => {
       return res.redirect("/listings");
     }
     console.log(listing);
-    res.render("listings/show.ejs", { listing });
+    res.render("listings/show.ejs", { currentUser: req.user, listing });
   }
   
 
@@ -76,3 +86,29 @@ module.exports.deleteListing = async (req, res) => {
         req.flash("error", "Listing not found.");
         return res.redirect("/listings");
   }
+
+
+
+  module.exports.analyticsPage = async (req, res) => {
+    const { id } = req.params;
+    const listing = await Listing.findById(id);
+  
+    const bookings = await Booking.find({ listing: id });
+  
+    let totalGuests = 0;
+    let totalDays = 0;
+  
+    bookings.forEach(booking => {
+      totalGuests += booking.guests;
+      totalDays += booking.days;
+    });
+  
+    res.render("listings/analytics", {
+      listing,
+      bookings,
+      totalBookings: bookings.length,
+      totalGuests,
+      totalDays
+    });
+  };
+  

@@ -1,0 +1,62 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row mt-4">
+  <div class="col-8 offset-2">
+
+    <!-- Page Heading -->
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Analytics Dashboard</h2>
+      <p class="lead text-muted">Listing: <strong><%= listing.title %></strong></p>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row text-center mb-4">
+      <div class="col-md-4 mb-3">
+        <div class="card border-primary shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Total Bookings</h5>
+            <h3 class="text-primary"><%= totalBookings %></h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card border-success shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Total Guests</h5>
+            <h3 class="text-success"><%= totalGuests %></h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card border-warning shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Total Stay Days</h5>
+            <h3 class="text-warning"><%= totalDays %></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="mb-4">
+
+    <!-- Booking Details -->
+    <h4 class="mb-3">Booking History</h4>
+
+    <% if (bookings.length === 0) { %>
+      <p class="text-muted">No bookings yet for this listing.</p>
+    <% } else { %>
+      <ul class="list-group shadow-sm">
+        <% bookings.forEach(b => { %>
+          <li class="list-group-item mb-3">
+            <p><strong>Name:</strong> <%= b.name %></p>
+            <p><strong>Phone:</strong> <%= b.phone %></p>
+            <p><strong>Aadhar:</strong> <%= b.aadhar %></p>
+            <p><strong>Guests:</strong> <%= b.guests %> | <strong>Days:</strong> <%= b.days %></p>
+            <p><strong>Address:</strong> <%= b.address %></p>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+  </div>
+</div>

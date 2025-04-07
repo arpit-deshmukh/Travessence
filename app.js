@@ -1,6 +1,5 @@
-if(process.env.NODE_ENV != "production"){
-    require('dotenv').config();
-}
+
+require('dotenv').config();
 
 const express = require('express');
 const app = express();
@@ -16,6 +15,9 @@ const ExpressError= require('./utils/ExpressError.js')
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
+const bookingRoutes = require("./routes/booking");
+
+
 
 ///auth
 const passport = require("passport");
@@ -66,9 +68,9 @@ const store = MongoStore.create({
     touchAfter:24*60*60,
 })
 
-    store.on("error",()=>{
-        console.log("ERROR IN MONGO SESSION STORE",err);
-    })
+store.on("error",()=>{
+    console.log("ERROR IN MONGO SESSION STORE",err);
+})
 
 
 //session options 
@@ -83,7 +85,7 @@ const sessionOptions = {
         expires  : Date.now() + 7*24*60*60*1000 ,  
         maxAge : 7*24*60*60*1000 ,
         httplOnly :true,
-
+        
     }
 }
 
@@ -99,6 +101,14 @@ app.get('/',(req,res)=>{
 app.use(session(sessionOptions));
 app.use(flash());
 
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    res.locals.currentUser = req.user;
+    next();
+  });
+
+  
 //passport 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -121,7 +131,7 @@ app.use((req,res,next)=>{
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
 app.use("/",userRouter);
-
+app.use("/bookings", bookingRoutes);
 
 //std response
 app.all("*",(req,res,next)=>{
@@ -142,6 +152,9 @@ app.use((err,req,res,next)=>{
 // })
 
 const PORT = process.env.PORT || 3000;
+
+// console.log(process.env.CLOUD_NAME, process.env.CLOUD_API_KEY, process.env.CLOUD_API_SECRET);
+
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });

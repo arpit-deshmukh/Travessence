@@ -15,7 +15,7 @@ const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
       folder: 'Travessance_DEV',
-      allowed_formats: ["png","jpg","jpeg","pdf"]
+      // allowed_formats: ["png","jpg","jpeg","pdf"]
       
     },
   });
