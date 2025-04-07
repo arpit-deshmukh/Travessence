@@ -88,11 +88,11 @@ const sessionOptions = {
 }
 
 
-// //root 
-// app.get('/',(req,res)=>{
-//     // res.send("heyy , this is HOMEPAGE");
-//     res.redirect("/listings");
-// });
+//root 
+app.get('/',(req,res)=>{
+    // res.send("heyy , this is HOMEPAGE");
+    res.redirect("/listings");
+});
 
 
 //session and flash middleware use
